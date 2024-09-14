@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEN DESIGN</title>
+    <style>
+        
+        /* Style global */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #f0f0f0;
+            scroll-behavior: smooth;
+            transition: background-color 0.5s, color 0.5s;
+            cursor: none; /* Cacher le curseur par défaut */
+        }
+        .light-mode {
+            background-color: #f0f0f0;
+            color: #121212;
+        }
+        /* Styles du curseur personnalisé */
+        .custom-cursor {
+            position: fixed; /* Change de absolute à fixed pour qu'il reste visible même quand on scroll */
+            width: 20px;
+            height: 20px;
+            background-color: blue; /* Curseur bleu */
+            border-radius: 50%;
+            pointer-events: none; /* Empêche les interactions du curseur avec les éléments */
+            z-index: 10000; /* Z-index élevé pour qu'il reste au-dessus de tout */
+            opacity: 1; /* Assure que le curseur est toujours visible */
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Curseur lors d'un hover sur un lien */
+        a:hover ~ .custom-cursor,
+        button:hover ~ .custom-cursor {
+            transform: scale(1.5);
+            background-color: rgba(76, 175, 80, 0.3);
+        }
+
+        /* Styles pour l'effet d'ombre */
+        .custom-cursor-shadow {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: rgba(76, 175, 80, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.2s ease-out;
+            z-index: 9998;
+        }
+        /* Navigation */
+        /* Fond dégradé similaire à Hero */
+        header {
+            position: relative;
+            height: 10vh; /* Ajuster selon le contenu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(100deg, #1e3c72 0%, #2a5298 30%, #f0f0f0 100%);
+            color: #f0f0f0;
+            padding: 10px 0;
+        }
+        .light-mode header {
+            background-color: #fff;
+        }
+
+        nav {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-container {
+            flex: 1;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        nav a {
+            margin: 0 20px;
+            color: #080808;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        .light-mode nav a {
+            color: #0602e0;
+        }
+        nav a:hover {
+            color: #0602e0;
+            transform: scale(1.05);
+        }
+        .theme-toggle {
+            background-color: transparent;
+            border: 2px solid #0602e0;
+            color: #080808;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+            margin-left: 20px;
+        }
+        .theme-toggle:hover {
+            background-color: #0602e0;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .light-mode .theme-toggle {
+            border-color: #4CAF50;
+            color: #121212;
+        }
+        .light-mode .theme-toggle:hover {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        .logo {
+            width: 120px;
+            height: auto;
+            margin-right: 20px;
+            vertical-align: middle;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            height: 60vh; /* Adjust the height as needed */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            text-align: center;
+            background-color: #2b2b2b; /* Fallback background color */
+            color: #f0f0f0;
+        }
+
+        .animated-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #ADD8E6, #00008B, #ADD8E6, #00008B);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            z-index: 0;
+        }
+
+        @keyframes gradientBackground {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for contrast */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #hero h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        #hero h2 {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        #hero p {
+            font-size: 1.2em;
+        }
+
+        
+        /* Section Portfolio */
+        #portfolio {
+            padding: 60px 0;
+            background-color: #1e1e1e;
+            animation: fadeIn 2s ease-out;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .portfolio-item {
+            margin-bottom: 40px;
+            transition: transform 0.3s ease;
+        }
+        .portfolio-item:hover {
+            transform: scale(1.05);
+        }
+        .portfolio-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+            max-height: 500px;
+            object-fit: contain;
+        }
+        .portfolio-item p {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: #f0f0f0;
+            text-align: center;
+        }
+        #contact {
+            padding: 20px 0;
+            background-color: #2b2b2b;
+            color: #f0f0f0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #contact h2 {
+            font-size: 2.5em; /* Augmentez cette valeur pour une taille plus grande */
+            margin-bottom: 20px;
+        }
+
+        #contact p {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            width: 220px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .whatsapp-button {
+            background-color: #25D366;
+        }
+
+        .contact-button i {
+            margin-right: 8px;
+        }
+
+        .contact-button:hover {
+            transform: scale(1.05);
+            background-color: #45a049;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #1ebd5e;
+        }
+
+        #contact::before, #contact::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+            animation: bubble 8s infinite;
+        }
+
+        #contact::before {
+            top: -50px;
+            left: -50px;
+            animation-delay: 0s;
+        }
+
+        #contact::after {
+            bottom: -50px;
+            right: -50px;
+            animation-delay: 4s;
+        }
+
+        @keyframes bubble {
+            0%, 100% {
+                transform: scale(1) translate(0, 0);
+            }
+            50% {
+                transform: scale(1.2) translate(20px, -20px);
+            }
+        }
+        #scrolling-text {
+            position: relative;
+            overflow: hidden;
+            padding: 20px 0;
+            background-color: #2b2b2b; /* Fond transparent */
+            color: #fff;
+            text-align: center;
+            width: 100%; /* Assurez-vous que la section occupe toute la largeur */
+        }
+
+        .scrolling-text-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .scrolling-text-container {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll-text 20s linear infinite;
+        }
+
+        .scrolling-text {
+            font-size: 1.5em;
+            margin: 0;
+            padding-right: 50px; /* Ajoutez un peu d'espace pour une transition plus douce */
+        }
+
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            text-align: center;
+            padding: 20px 0;
+            transition: background-color 0.3s;
+        }
+        .light-mode footer {
+            background-color: #fff;
+            color: #121212;
+        }
+        #social-media {
+            display: flex;
+            justify-content: center; /* Centre horizontalement le contenu */
+            align-items: center; /* Centre verticalement le contenu */
+            height: 15vh; /* Assure que la section prend toute la hauteur de la fenêtre */
+            background-color: #2b2b2b; /* Fond de la section */
+        }
+
+        .social-icons {
+            display: flex;
+            flex-direction: row; /* Aligne les icônes horizontalement */
+            justify-content: center; /* Centre les icônes horizontalement */
+        }
+
+        .social-icons a {
+            text-decoration: none; /* Enlève le souligné */
+            color: inherit; /* Assure que la couleur du texte (icône) est héritée */
+            margin: 0 15px; /* Ajoute un espace entre les icônes horizontalement */
+            font-size: 2.5rem; /* Augmente la taille des icônes */
+            transition: transform 0.3s ease, color 0.3s ease; /* Ajoute une transition pour l'animation */
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2); /* Agrandit l'icône lorsqu'on la survole */
+            color: #4CAF50; /* Change la couleur de l'icône sur survol */
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Augmenter la hauteur de la section footer */
+        .footer-section {
+            padding: 40px 0; /* Ajustez la hauteur selon vos besoins */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-links {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .nav-links a {
+                margin: 5px 0;
+            }
+            .logo {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Curseur personnalisé -->
+    <div class="custom-cursor"></div>
+
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <div class="logo-container">
+                <a href="#hero">
+                    <img src="images/sowd.png" alt="Logo" class="logo">
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="#hero">Accueil</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#contact">Contact</a>
+                <button class="theme-toggle" id="theme-toggle">Mode Clair</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Section Hero -->
+    <section id="hero">
+        <div class="animated-background"></div>
+        <div class="hero-content">
+            <h1>Bienvenue sur Mon Portfolio</h1>
+            <h2>SEN DESIGN</h2>
+            <p>Découvrez mes projets et compétences en design graphique.</p>
+        </div>
+    </section>
+
+    <!-- Section Portfolio -->
+<section id="portfolio">
+    <style>
+        /* Fond dégradé similaire à Hero */
+        #portfolio {
+            position: relative;
+            min-height: 100vh; /* Ajuster selon le contenu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            text-align: center;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 40%, #f0f0f0 100%);
+            color: #f0f0f0;
+            padding: 60px 0;
+        }
+
+        /* Style du contenu du portfolio */
+        .portfolio-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .portfolio-title {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+
+        .portfolio-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-item p {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+    </style>
+
+    <div class="portfolio-content">
+        <h2 class="portfolio-title">Mon Portfolio</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="images/sowd.png" alt="Projet 1">
+                <p>Logo</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/salihate1.jpg" alt="Projet 2">
+                <p>Affiche</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/WEEKEND.jpg" alt="Projet 3">
+                <p>Affiche de WEEKEND</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/Cotisations.jpg" alt="Projet 4">
+                <p>Affiche de cotisation</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/illustrator2.jpg" alt="Projet 5">
+                <p>Miniature YouTube</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/dévoilées og.jpg" alt="Projet 6">
+                <p>Miniature YouTube</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/DG is not free 1.jpg" alt="Projet 7">
+                <p>Affiche</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/Collection foot 2.jpg" alt="Projet 8">
+                <p>Affiche</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/prêt à porter2.jpg" alt="Projet 9">
+                <p>Affiche</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/pub test SOS.jpg" alt="Projet 9">
+                <p>Affiche</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/kp1-02.png" alt="Projet 9">
+                <p>logo</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/NSGBE.jpg" alt="Projet 9">
+                <p>Affiche</p>
+            </div>
+            <div class="portfolio-item">
+                <img src="images/logo ai444.jpg" alt="Projet 9">
+                <p>Miniature Youtube</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    <!-- Section Contact -->
+    <section id="contact">
+        <h2>Contactez-moi</h2>
+        <div style="margin-top: 15px;">
+            <p>Nom : <strong>Djiby SOW</strong></p>
+            <p>Téléphone : <strong>+221 70 959 31 36</strong></p>
+            <div class="contact-buttons">
+                <!-- Bouton pour appeler -->
+                <a href="tel:+221 70 959 31 36" class="contact-button">
+                    <i class="fa-solid fa-phone fa-beat-fade"></i> Nous appeler
+                </a>
+                <!-- Bouton pour envoyer un message WhatsApp -->
+                <a href="https://wa.me/709593136" target="_blank" class="contact-button whatsapp-button">
+                    <i class="fa-brands fa-whatsapp fa-beat-fade"></i> Envoyer un message WhatsApp
+                </a>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com"><i class="fa-brands fa-facebook fa-beat"></i></a>
+                    <a href="https://www.instagram.com"><i class="fa-brands fa-instagram fa-beat"></i></a>
+                    <a href="https://www.youtube.com"><i class="fa-brands fa-youtube fa-beat"></i></a>
+                    <a href="https://www..com"><i class="fa-brands fa-linkedin fa-beat"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bulles stylisées -->
+    <!-- Animation des bulles -->
+    <style>
+        @keyframes floatBubbles {
+            0%, 100% {
+                transform: translateY(-50%) scale(1);
+            }
+            50% {
+                transform: translateY(-50%) scale(1.2);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            #contact .bubbles {
+                width: 150px;
+                height: 150px;
+            }
+
+            #contact a {
+                width: 90%;
+            }
+        }
+    </style>
+</section>
+
+<section id="scrolling-text">
+    <div class="scrolling-text-wrapper">
+        <div class="scrolling-text-container">
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"></p> <!-- Répéter le texte pour la continuité -->
+            <p class="scrolling-text"><strong>SEN DESING, l'excellence à chaque pixel !</strong></p>
+        </div>
+    </div>
+</section>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</script>
+<footer>
+    <p>&copy; <strong>2024 SEN DESIGN</strong></p>
+    <p>Tous droits réservés</p>
+    <style> /* Style général du footer */
+        footer {
+            background-color: #333; /* Couleur de fond sombre */
+            color: #fff; /* Couleur du texte */
+            text-align: center; /* Centrer le texte */
+            padding: 10px 0; /* Ajouter du padding en haut et en bas */
+            position: relative; /* Assurer que le footer est positionné correctement */
+            border-top: 1px solid #444; /* Ajouter une bordure supérieure pour séparer le contenu */
+        }
+
+        /* Style pour le texte du footer */
+        footer p {
+            margin: 0; /* Supprimer les marges par défaut */
+            font-size: 20px; /* Ajuster la taille du texte */
+            font-family: 'Arial', sans-serif; /* Choisir une police simple et lisible */
+            letter-spacing: 0.5px; /* Espacement entre les lettres */
+        }
+
+        /* Style pour le lien dans le footer */
+        footer a {
+            color: #1e90ff; /* Couleur des liens */
+            text-decoration: none; /* Supprimer le soulignement */
+            font-weight: bold; /* Rendre le texte des liens en gras */
+        }
+
+        /* Effet au survol des liens */
+        footer a:hover {
+            text-decoration: underline; /* Souligner le lien au survol */
+            color: #00bfff; /* Changer la couleur au survol */
+        }
+
+        /* Ajouter une animation subtile */
+        footer p {
+            animation: fadeIn 2s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+    </div>
+    </div>
+    </div>
+    </div>
+</section>
+
+</footer>
+
+<!-- Script pour le changement de thème -->
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-mode');
+        if (body.classList.contains('light-mode')) {
+            themeToggle.textContent = 'Mode Sombre';
+        } else {
+            themeToggle.textContent = 'Mode Clair';
+        }
+    });
+</script>
+
+<script>
+    const customCursor = document.querySelector('.custom-cursor');
+
+    document.addEventListener('mousemove', (e) => {
+        customCursor.style.left = `${e.clientX}px`;
+        customCursor.style.top = `${e.clientY}px`;
+    });
+</script>
+
+</body>
+</html>
